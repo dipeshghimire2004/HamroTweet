@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Tweet Form 
+{% endblock %}
+
+{% block content %}
+<h1 class='text-center text-white'>
+   Welcome to Space Nepal, where konwledge meets wisdom
+</h1>
+
+<h2>
+    {%if form.instance.pk%}
+    Edit Tweet
+    {%else%}
+    Create tweet
+    {%endif%}
+
+    <form method='post' enctype='Multipart/form-data' class='form'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class='btn btn-warning' type='Submit'>Submit</button>
+        <a href="{% url "tweet_List" %}">Back to tweet list</a>
+    </form>
+</h2>
+{% endblock %}
