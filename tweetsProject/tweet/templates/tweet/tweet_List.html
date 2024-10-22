@@ -5,22 +5,31 @@
 {% endblock %}
 
 {% block content %}
-<h1 class='text-center text-white'>
-    Tweets
-    <a href="{% url 'tweet_create' %}" class="btn btn-primary">Create a tweet</a>
+    <h1 class="text-center text-white mb-4">Tweets</h1>
+   
 
     {% if tweets %}
-    <div class="container row">
+    <div class="container row mt-5 ">
+
+        {% comment %} for loop {% endcomment %}
         {% for tweet in tweets %}
         
-        <div class="card" style="width: 18rem;">
-            <img src="{{ tweet.photo.url }}" class="card-img-top" alt="...">
+        <div class="col-md-4 mb-4" style="width: 20rem;">
+            <div class='h-20 rounded' style="width: 18rem; height:20rem;">
+                {% if tweet.photo %}
+                    <img src="{{ tweet.photo.url }}" class="card-img-top " style='height:100%; width:100%; object-fit:cover;' alt="...">
+                {% else %}
+                    <img src='/path/to/defaut-image.jpg'  class="card-img-top object-cover overflow-hidden h-20" alt="No image available">
+                {% endif %}
+            </div>
             <div class="card-body">
                 <h5 class="card-title">{{ tweet.user.username }}</h5>
-                <p class="card-text">{{ tweet.text }}</p>
+                <p class="card-text text-muted">{{ tweet.text }}</p>
                 {% if tweet.user == user %}
-                <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
-                <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary btn-sm mx-2">Edit</a>
+                    <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger btn-sm mx-2">Delete</a>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -29,5 +38,8 @@
     {% else %}
     <p>No tweets found matching your search criteria.</p>
     {% endif %}
-</h1>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'tweet_create' %}" class="btn btn-success btn-lg">Create a tweet</a>
+    </div>
 {% endblock %}
